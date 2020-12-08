@@ -47,12 +47,24 @@
 </template>
 
 <script>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 
 export default {
   setup() {
+    // state token
+    const token = localStorage.getItem("token");
+
+    onMounted(() => {
+      // check token exist
+      if (token) {
+        return router.push({
+          name: "dashboard",
+        });
+      }
+    });
+
     // inisialisasi vue router on composition API
     const router = useRouter();
 

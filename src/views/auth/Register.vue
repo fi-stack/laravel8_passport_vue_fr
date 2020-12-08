@@ -80,12 +80,24 @@
 </template>
 
 <script>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 
 export default {
   setup() {
+    // state token
+    const token = localStorage.getItem("token");
+
+    onMounted(() => {
+      // check token exist
+      if (token) {
+        return router.push({
+          name: "dashboard",
+        });
+      }
+    });
+
     // inisialisasi vue router an Composition API
     const router = useRouter();
 
@@ -127,6 +139,7 @@ export default {
           validation.value = error.response.data;
         });
     }
+
     return {
       user,
       validation,
